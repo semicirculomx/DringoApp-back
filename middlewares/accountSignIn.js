@@ -14,6 +14,7 @@ async function accountExistsSignIn(req, res, next){
     }
     console.log(user)
     console.log(req.user)
+    console.log(req.body)
     return res.status(400).json({
         success: false,
         message: [
