@@ -6,11 +6,13 @@ function passwordIsOk(req, res, next){
     if(bcryptjs.compareSync(form_pass, db_pass)){
         return next()
     }
+    console.log(db_pass)
+    console.log(form_pass)
     return res.status(400).json({
         succes: false,
         message: [{
             path: 'credentials',
-            message: 'wrong credentials'
+            message: 'malic credentials'
         }]
     });
 }

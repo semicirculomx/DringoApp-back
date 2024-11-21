@@ -12,12 +12,14 @@ async function accountExistsSignIn(req, res, next){
         }
         return next()
     }
+    console.log(user)
+    console.log(req.user)
     return res.status(400).json({
         success: false,
         message: [
             {
                 path: "credentials",
-                message: "wrong credentials"
+                message: "mal credentials"
             }
         ]
     });
