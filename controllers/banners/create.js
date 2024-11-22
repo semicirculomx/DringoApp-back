@@ -4,10 +4,10 @@ import Banner from '../../models/Banner.js';
 const create = async (req, res) => {
     try {
       console.log(req.body)
-    const { name, image, description } = req.body;
+    const { name, image, description, productId } = req.body;
 
     // Crear la nueva categoría
-    const newBanner = new Banner({ name, image, description });
+    const newBanner = new Banner({ name, image, description, productId });
     await newBanner.save();
 
     res.status(201).json({

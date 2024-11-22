@@ -4,12 +4,12 @@ import Banner from '../../models/Banner.js';
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, image, description } = req.body;
+    const { name, image, description, product } = req.body;
 
     // Buscar y actualizar la categoría
     const updatedBanner = await Banner.findByIdAndUpdate(
       id,
-      { name, image, description },
+      { name, image, description, product },
       { new: true }
     );
 
