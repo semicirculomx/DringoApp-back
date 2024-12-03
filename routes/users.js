@@ -12,6 +12,7 @@ import signIn from '../controllers/users/signIn.js';
 import signOut from '../controllers/users/signOut.js';
 import userIsVerified from '../controllers/users/isVerified.js';
 import resetPassword from '../controllers/users/resetPassword.js';
+import forgotPassword from '../controllers/users/forgotPassword.js';
 import reSend from '../controllers/users/reSendEmail.js';
 import createAdmin from '../controllers/users/createAdmin.js';
 import updateUser from '../controllers/users/updateUser.js';
