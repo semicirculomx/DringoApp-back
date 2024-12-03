@@ -33,7 +33,7 @@ let signin = async (req, res, next) => {
         const token = jwt.sign(
             { id: user._id },
             process.env.SECRET,
-            { expiresIn: '10d' } 
+            { expiresIn: '365d' } 
         );
 
 

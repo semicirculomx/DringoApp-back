@@ -25,13 +25,13 @@ let signUp = async (req, res, next) => {
         await sendEmail({to:req.body.email, subject:`Verifica tu cuenta en Dringo 🥳`, template:templateVerification(req.body.verify_code)})
         return res.status(201).json({
             success: true,
-            message: "The user was created"
+            message: "Usuario creado!"
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "There was an error creating the user"
+            message: 'Error creando al usuario'
         });
     }
 }

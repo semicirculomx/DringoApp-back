@@ -34,6 +34,8 @@ router.patch('/verify/:verify_code', userIsVerified);
 
 // Password Management Routes
 router.post('/reset_password', passport.authenticate('jwt', { session: false }), verifyCurrentPassword, resetPassword);
+router.post('/forgot_password', forgotPassword);
+router.post('/recover_password', passport.authenticate('jwt', { session: false }), verifyCurrentPassword, resetPassword);
 
 // User Management Routes
 router.get('/me', passport.authenticate('jwt', { session: false }), isAdmin, getMyData);
@@ -49,8 +51,5 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, a
 // User Deletion Routes
 router.delete('/:id', passport.authenticate('jwt', { session: false }), isAdmin, deleteUser);
 router.delete('/', passport.authenticate('jwt', { session: false }), isAdmin, deleteUsers);
-
-// Optional: Forgot Password Route
-// router.post('/forgot_password', forgotPassword);
 
 export default router;
