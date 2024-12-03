@@ -5,7 +5,7 @@ import sendEmail from '../../utils/mailing.util.js';
 
 let forgotPassword = async (req, res, next) => {
     const { email } = req.body;
-
+    
     try {
         let user = await User.findOne({ email });
 
@@ -25,11 +25,11 @@ let forgotPassword = async (req, res, next) => {
 
 
         // Enviar un correo electrónico con el token
-        const resetUrl = `${req.protocol}://${req.get('host')}/reset-password/?token=${token}`;
+        const resetUrl = `https://dashboard.dringo.com.mx/reset-password/?token=${token}`;
         await sendEmail({
             to: user.email,
-            subject: 'Password Reset Request',
-            template: `You requested a password reset. Please go to ${resetUrl}`
+            subject: 'Solicitud de reestablecimiento de contraseña',
+            template: `Si tu solicitaste reestablecer tu contraseña porfavor accede a este enlace para cambiar tu contraseña: ${resetUrl}`
         });
 
         return res.status(200).json({
