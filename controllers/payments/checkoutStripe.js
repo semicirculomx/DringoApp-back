@@ -2,7 +2,7 @@ import stripe from 'stripe';
 import Cart from '../../models/Cart.js';
 import Coupon from '../../models/Coupon.js';
 
-const stripeSecretKey = process.env.PRIVATE_KEY_STRIPE;
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripeClient = new stripe(stripeSecretKey);
 
 const createCheckoutSession = async (req, res) => {
