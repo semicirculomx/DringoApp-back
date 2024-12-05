@@ -21,6 +21,7 @@ import { deleteUser, deleteUsers } from '../controllers/users/deleteUsers.js';
 import getMyData from '../controllers/users/getMyData.js';
 import { getOneUser, getUsers, getTotalCustomers, getCustomer } from '../controllers/users/getUsers.js';
 import { userSignUp } from '../schemas/users.js';
+import  savePushToken  from '../controllers/users/savePushToken.js';
 
 const router = express.Router();
 
@@ -45,6 +46,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), isAdmin, getUs
 router.get('/total-customers', passport.authenticate('jwt', { session: false }), isAdmin, getTotalCustomers);
 router.get('/get-one-user', passport.authenticate('jwt', { session: false }), isAdmin, getOneUser);
 router.get('/:id', passport.authenticate('jwt', { session: false }), isAdmin, getCustomer);
+router.post('/save_push_token', passport.authenticate('jwt', { session: false }), savePushToken);
 // Admin Management Routes
 router.put('/create-admin/:id', passport.authenticate('jwt', { session: false }), isAdmin, createAdmin);
 router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, adminConvert);

@@ -10,7 +10,8 @@ const userSchema = new Schema({
   is_online: { type: Boolean, required: true },
   ageVerified: { type: Boolean, default: false },
   is_verified: { type: Boolean, required: true },
-  verify_code: { type: Number, required: true }
+  verify_code: { type: Number, required: true },
+  pushToken: { type: String, required: false }
 }, { timestamps: true });
 
 const User = model('User', userSchema);
