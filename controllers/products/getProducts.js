@@ -14,7 +14,10 @@ const read = async (req, res) => {
         const currentPage = parseInt(page, 10) > 0 ? parseInt(page, 10) : 1;
 
         if (sort) sortOptions[sort] = 1; // Ordenar por el campo especificado en orden ascendente
-        if (name) queries.name = new RegExp(name, 'i'); // Búsqueda case-insensitive por nombre
+        if (name) {
+            queries.name = new RegExp(name, 'i');
+            queries.description = new RegExp(name, 'i');
+        } // Búsqueda case-insensitive por nombre
         if (priceOrder) {
             sortOptions.price = priceOrder === 'asc' ? 1 : -1; // Ordenar por precio ascendente o descendente
         }
