@@ -10,22 +10,18 @@ const createOrder = async (req, res) => {
     const { cartId, deliveryAddress, paymentMethod, couponId = null, nota } = req.body;
     const userId = req.user._id.toString();
 
-    const session = await mongoose.startSession(); // Start a new session
-    session.startTransaction(); // Start the transaction
+    let updatedProducts = []; // Track updated products for rollback
 
     try {
-        // Validar que el carrito exista
-        const cart = await Cart.findById(cartId).session(session); // Use session in queries
+        const cart = await Cart.findById(cartId);
         if (!cart) {
             throw new Error('Carrito no encontrado');
         }
 
-        // Validar productos y calcular el precio total
         const { validatedProducts, totalPrice: initialTotalPrice } = await validateCartProducts(cart.products);
 
         let totalPrice = initialTotalPrice;
 
-        // Si hay un cupón, aplicar el descuento correspondiente
         let coupon = null;
         if (couponId) {
             coupon = await handleCouponUsage(couponId, userId);
@@ -39,12 +35,12 @@ const createOrder = async (req, res) => {
             if (totalPrice < 0) totalPrice = 0;
         }
 
-        // Actualizar el stock de los productos
+        // Update stock and track changes
         for (const product of validatedProducts) {
             const updatedProduct = await Product.findByIdAndUpdate(
                 product.product,
-                { $inc: { stock: -product.quantity } }, // Decrease stock
-                { new: true, session } // Use session
+                { $inc: { stock: -product.quantity } },
+                { new: true }
             );
 
             if (!updatedProduct) {
@@ -54,9 +50,11 @@ const createOrder = async (req, res) => {
             if (updatedProduct.stock < 0) {
                 throw new Error(`Stock insuficiente para el producto: ${product.name}`);
             }
+
+            updatedProducts.push({ productId: product.product, quantity: product.quantity });
         }
 
-        // Crear la orden
+        // Create the order
         const newOrder = new Order({
             user: userId,
             products: validatedProducts,
@@ -71,22 +69,20 @@ const createOrder = async (req, res) => {
             nota
         });
 
-        await newOrder.save({ session }); // Use session
+        await newOrder.save();
 
-        // Limpiar el carrito del usuario
-        await clearCart(userId, session); // Adjust clearCart to accept session
-
-        // Commit the transaction
-        await session.commitTransaction();
-        session.endSession();
+        // Clear the cart
+        await clearCart(userId);
 
         return res.status(201).json({ success: true, order: newOrder });
     } catch (error) {
-        // Rollback any changes
-        await session.abortTransaction();
-        session.endSession();
-
         console.error(error);
+
+        // Rollback stock changes
+        for (const { productId, quantity } of updatedProducts) {
+            await Product.findByIdAndUpdate(productId, { $inc: { stock: quantity } });
+        }
+
         return res.status(500).json({ success: false, message: 'Ocurrió un error al crear la orden, por favor intente de nuevo' });
     }
 };

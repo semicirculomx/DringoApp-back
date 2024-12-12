@@ -26,7 +26,7 @@ const domainTransport = createTransport({
 });
 
 // Retry function with exponential backoff
-async function retrySendMail(transport, mailOptions, maxRetries = 3) {
+async function retrySendMail(transport, mailOptions, maxRetries = 2) {
   let attempt = 0;
 
   while (attempt < maxRetries) {

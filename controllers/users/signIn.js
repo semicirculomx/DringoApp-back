@@ -6,16 +6,7 @@ import bcrypt from 'bcryptjs';
 let signin = async (req, res, next) => {
     try {
 
-        const user = await User.findOne({ email: req.body.email });
-
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'Usuario no encontrado'
-            });
-        }
-
+        const user = req.user;
 
         const isMatch = await bcrypt.compare(req.body.password, user.password);
         if (!isMatch) {
@@ -25,10 +16,12 @@ let signin = async (req, res, next) => {
             });
         }
 
-
-        user.is_online = true;
-        await user.save();
-
+        const online = await User.findByIdAndUpdate(
+            user._id,
+            {is_online: true},
+            { new: true }
+          );
+      
 
         const token = jwt.sign(
             { id: user._id },

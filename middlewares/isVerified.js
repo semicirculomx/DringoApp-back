@@ -7,7 +7,7 @@ async function accountHasBeenVerified(req, res, next){
         message: [
             {
                 path: "verify",
-                message: "No está verificado"
+                message: "Tu cuenta aún no está verificada"
             }
         ]
     });

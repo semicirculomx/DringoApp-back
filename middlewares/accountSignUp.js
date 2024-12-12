@@ -8,7 +8,7 @@ async function accountExistsSignUp(req, res, next){
             message: [
                 {
                     path: "userExist",
-                    message: "The user already exist"
+                    message: "Este usuario ya existe, inicia sesión."
                 }
             ]
         });

@@ -12,15 +12,13 @@ async function accountExistsSignIn(req, res, next){
         }
         return next()
     }
-    console.log(user)
-    console.log(req.user)
-    console.log(req.body)
+
     return res.status(400).json({
         success: false,
         message: [
             {
                 path: "credentials",
-                message: "mal credentials"
+                message: "No existe este usuario"
             }
         ]
     });

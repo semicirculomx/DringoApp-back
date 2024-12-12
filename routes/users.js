@@ -6,7 +6,7 @@ import accountExistsSignIn from '../middlewares/accountSignIn.js';
 import verifyCurrentPassword from '../middlewares/verifyCurrentPassword.js';
 import passwordIsOk from '../middlewares/passwordIsOk.js';
 import isAdmin from '../middlewares/isAdmin.js';
-
+import accountHasBeenVerified from '../middlewares/isVerified.js'
 import signUp from '../controllers/users/signUp.js';
 import signIn from '../controllers/users/signIn.js';
 import signOut from '../controllers/users/signOut.js';
@@ -27,7 +27,7 @@ const router = express.Router();
 
 // Authentication Routes
 router.post('/signup', accountExistsSignUp, validator(userSignUp), signUp);
-router.post('/signin', accountExistsSignIn, passwordIsOk, signIn);
+router.post('/signin', accountExistsSignIn, passwordIsOk, accountHasBeenVerified, signIn);
 router.post('/signout', passport.authenticate('jwt', { session: false }), signOut);
 
 // User Verification Routes
