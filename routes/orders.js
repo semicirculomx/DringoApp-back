@@ -46,4 +46,39 @@ router.get('/', passport.authenticate('jwt', { session: false }), isAdmin, getAl
 // Ruta para eliminar todas las ordenes
 router.delete('/', passport.authenticate('jwt', { session: false }), isAdmin, deleteOrders);
 
+router.get('/reverse-geocode', async (req, res) => {
+    const geocodeKey = process.env.GEOCODE_APIKEY; // Securely stored in backend
+    const { lat, lng } = req.query;
+
+    if (!lat || !lng) {
+        return res.status(400).json({ error: "Latitude and longitude are required." });
+    }
+
+    try {
+        const response = await fetch(
+            `https://geocode.maps.co/reverse?lat=${lat}&lon=${lng}&api_key=${geocodeKey}`
+        );
+        const data = await response.json();
+
+        if (data.status !== "OK") {
+            return res.status(500).json({ error: data.error_message || "Failed to fetch geocode data." });
+        }
+
+        res.json(data);
+    } catch (error) {
+        console.error("Error fetching reverse geocode data:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
+});
+
+app.get('/geocode', async (req, res) => {
+    const geocodeKey = process.env.GOOGLE_MAPS_APIKEY; // Securely stored in backend
+    const { address } = req.query;
+
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeKey}`);
+    const data = await response.json();
+
+    res.json(data);
+});
+
 export default router;

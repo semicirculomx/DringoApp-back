@@ -20,7 +20,9 @@ const createCheckoutSession = async (req, res) => {
 
     // Calcular el totalAmount usando el precio total del carrito
     let totalAmount = cart.totalPrice; // Iniciamos con el precio total del carrito
-
+    if(totalAmount < process.env.MIN_AMOUNT){
+      return res.status(400).json({ success: false, message: `El monto mínimo de compra es de: ${process.env.MIN_AMOUNT}.00 MXN` });
+    }
     // Si hay un cupón, aplicar el descuento correspondiente
     if (couponId) {
       const coupon = await Coupon.findById(couponId);
@@ -43,7 +45,7 @@ const createCheckoutSession = async (req, res) => {
         enabled: true,
       },
     });
-
+    console.log(Math.round(totalAmount * 100))
     return res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error('Error al crear sesión de pago:', error.message);
