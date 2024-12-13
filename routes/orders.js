@@ -71,7 +71,7 @@ router.get('/reverse-geocode', async (req, res) => {
     }
 });
 
-app.get('/geocode', async (req, res) => {
+router.get('/geocode', async (req, res) => {
     const geocodeKey = process.env.GOOGLE_MAPS_APIKEY; // Securely stored in backend
     const { address } = req.query;
 
