@@ -17,7 +17,7 @@ import isAdmin from '../middlewares/isAdmin.js';
 const router = express.Router();
 
 
-router.get('/reverse-geocode', passport.authenticate('jwt'), async (req, res) => {
+router.get('/reverse-geocode', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const geocodeKey = process.env.GEOCODE_APIKEY; // Securely stored in backend
     const { lat, lng } = req.query;
 
@@ -39,7 +39,7 @@ router.get('/reverse-geocode', passport.authenticate('jwt'), async (req, res) =>
     }
 });
 
-router.get('/geocode', passport.authenticate('jwt'), async (req, res) => {
+router.get('/geocode', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const geocodeKey = process.env.GOOGLE_MAPS_APIKEY; // Securely stored in backend
     const { address } = req.query;
 
