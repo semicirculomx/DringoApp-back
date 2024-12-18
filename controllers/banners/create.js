@@ -3,7 +3,6 @@ import Banner from '../../models/Banner.js';
 
 const create = async (req, res) => {
     try {
-      console.log(req.body)
     const { name, image, description, product } = req.body;
 
     // Crear la nueva categoría

@@ -4,7 +4,6 @@ import Order from '../../models/Order.js';
 
 const deleteOrder = async (req, res) => {
   const { orderId } = req.params;
-console.log(orderId)
   try {
     const order = await Order.findById(orderId);
 

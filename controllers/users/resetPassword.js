@@ -7,7 +7,6 @@ let resetPassword = async (req, res, next) => {
         const { newPassword } = req.body;
         const hashedPassword = bcryptjs.hashSync(newPassword, 10);
         user.password = hashedPassword;
-        console.log(user)
         await user.save();
         return res.status(200).json({
             success: true,

@@ -28,8 +28,6 @@ const read = async (req, res) => {
             .sort(sortOptions)
             /* .skip(skip)
             .limit(paginationLimit); */
-            console.log(queries)
-            console.log(products)
 
         // Contar el total de productos que coinciden con la consulta (opcional)
         const totalProducts = await Product.countDocuments(queries);

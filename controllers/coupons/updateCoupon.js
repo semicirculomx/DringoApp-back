@@ -12,7 +12,6 @@ const updateCoupon = async (req, res) => {
                 message: '¡Cupon no encontrado!'
             });
         }
-        console.log(discountPercentage, discountAmount)
        coupon.title = title || coupon.title
        coupon.code = code || coupon.code
        coupon.discountPercentage = discountPercentage
@@ -20,7 +19,6 @@ const updateCoupon = async (req, res) => {
        coupon.expiryDate = expiryDate || coupon.expiryDate
        coupon.usageLimit = usageLimit
         await coupon.save();
-        console.log(coupon)
         return res.status(201).json({
             success: true,
             message: '¡Cupon actualizado con éxito!',

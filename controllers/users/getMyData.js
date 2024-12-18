@@ -1,6 +1,5 @@
 import User from '../../models/User.js'
 const getMyData = async(req,res)=>{
-    console.log(req.user.id)
     try {
         const{id} = req.user
        const me = await User.findOne({_id:id})

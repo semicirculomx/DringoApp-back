@@ -45,7 +45,6 @@ const createCheckoutSession = async (req, res) => {
         enabled: true,
       },
     });
-    console.log(Math.round(totalAmount * 100))
     return res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error('Error al crear sesión de pago:', error.message);
