@@ -3,7 +3,6 @@ import Category from '../../models/Category.js';
 
 const create = async (req, res) => {
     try {
-      console.log(req.body)
     const { name, image, description } = req.body;
 
     // Crear la nueva categoría
