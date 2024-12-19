@@ -2,9 +2,30 @@ import mongoose from 'mongoose';
 import Order from '../../models/Order.js';
 import Product from '../../models/Product.js';
 import Cart from '../../models/Cart.js';
+import User from '../../models/User.js';
 import { handleCouponUsage } from '../../utils/couponUtils.js';
 import { validateCartProducts } from '../../utils/productUtils.js';
 import { clearCart } from '../../utils/clearCart.util.js';
+
+const sendPushNotification = async (expoPushToken, title, body, data) => {
+    const message = {
+        to: expoPushToken,
+        sound: 'default',
+        title,
+        body,
+        data,
+    };
+
+    await fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Accept-encoding': 'gzip, deflate',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+    });
+};
 
 const createOrder = async (req, res) => {
     const { cartId, deliveryAddress, paymentMethod, couponId = null, nota } = req.body;
@@ -73,6 +94,17 @@ const createOrder = async (req, res) => {
 
         // Clear the cart
         await clearCart(userId);
+
+        // Send push notification to the user
+        const user = await User.findById(userId);
+        if (user && user.pushToken) {
+            await sendPushNotification(
+                user.pushToken,
+                '¡Orden confirmada!',
+                `Tu orden con un total de $${totalPrice.toFixed(2)} ha sido confirmada y está en proceso.`,
+                { orderId: newOrder._id }
+            );
+        }
 
         return res.status(201).json({ success: true, order: newOrder });
     } catch (error) {

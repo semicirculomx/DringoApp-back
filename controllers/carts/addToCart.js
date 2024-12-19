@@ -88,7 +88,7 @@ const addToCart = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Error interno en el servidor',
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            error: error.message || undefined
         });
     }
 };
