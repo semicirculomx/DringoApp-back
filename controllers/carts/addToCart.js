@@ -43,7 +43,11 @@ const addToCart = async (req, res) => {
 
         // Find existing product in cart
         const existingProduct = cart.products.find(
-            p => p.product._id.toString() === productId
+            (p) => {
+                if(p.product) {
+                    return p.product?._id.toString() === productId
+                } 
+            }
         );
 
         if (existingProduct) {

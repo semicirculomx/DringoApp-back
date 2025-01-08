@@ -17,7 +17,11 @@ const removeFromCart = async (req, res) => {
     }
 
     // Verificar si el producto está en el carrito
-    const productIndex = cart.products.findIndex(p => p.product._id.toString() === productId);
+    const productIndex = cart.products.findIndex((p) => {
+      if(p.product) {
+        return p.product._id.toString() === productId
+      }
+    });
 
     if (productIndex === -1) {
       return res.status(404).json({
