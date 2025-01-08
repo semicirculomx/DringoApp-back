@@ -71,7 +71,7 @@ const addToCart = async (req, res) => {
 
         // Calculate total price efficiently using populated products
         cart.totalPrice = cart.products.reduce((total, item) => {
-            const productPrice = item.product.price || 0;
+            const productPrice = item.product?.price || 0;
             return total + (productPrice * item.quantity);
         }, 0);
 
