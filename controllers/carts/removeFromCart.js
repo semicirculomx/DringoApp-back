@@ -41,7 +41,9 @@ const removeFromCart = async (req, res) => {
 
     // Calcular el nuevo totalPrice directamente
     cart.totalPrice = cart.products.reduce((total, item) => {
-      return total + (item.product?.price * item.quantity);
+      if(item.product) {
+        return total + (item.product?.price * item.quantity);
+      }
     }, 0);
 
     // Guardar el carrito
