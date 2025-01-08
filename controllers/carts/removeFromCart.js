@@ -6,7 +6,7 @@ const removeFromCart = async (req, res) => {
   const { productId, quantity } = req.body;
 
   try {
-    // Buscar el carrito del usuario
+    // Buscar el carrito del usuario, excluyendo productos null
     const cart = await Cart.findOne({ user: userId }).populate('products.product');
 
     if (!cart) {
@@ -16,12 +16,11 @@ const removeFromCart = async (req, res) => {
       });
     }
 
-    // Verificar si el producto está en el carrito
-    const productIndex = cart.products.findIndex((p) => {
-      if(p.product) {
-        return p.product._id.toString() === productId
-      }
-    });
+    // Filtrar productos nulos para que no afecten el proceso
+    cart.products = cart.products.filter(p => p.product !== null);
+
+    // Verificar si el producto está en el carrito (sin productos nulos)
+    const productIndex = cart.products.findIndex(p => p.product._id.toString() === productId);
 
     if (productIndex === -1) {
       return res.status(404).json({
@@ -39,11 +38,13 @@ const removeFromCart = async (req, res) => {
       productInCart.quantity -= quantity;
     }
 
-    // Calcular el nuevo totalPrice directamente
+    // Calcular el nuevo totalPrice directamente, excluyendo productos null
     cart.totalPrice = cart.products.reduce((total, item) => {
-      if(item.product) {
-        return total + (item.product?.price * item.quantity);
+      // Asegurarse de que el producto no sea null antes de calcular el precio
+      if (item.product && item.product.price) {
+        return total + (item.product.price * item.quantity);
       }
+      return total;
     }, 0);
 
     // Guardar el carrito

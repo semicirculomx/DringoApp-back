@@ -40,7 +40,7 @@ router.post('/forgot_password', forgotPassword);
 router.post('/recover_password', passport.authenticate('jwt', { session: false }), resetPassword);
 
 // User Management Routes
-router.get('/me', passport.authenticate('jwt', { session: false }), isAdmin, getMyData);
+router.get('/me', passport.authenticate('jwt', { session: false }), getMyData);
 router.patch('/update', passport.authenticate('jwt', { session: false }), updateUser);
 router.get('/', passport.authenticate('jwt', { session: false }), isAdmin, getUsers);
 router.get('/total-customers', passport.authenticate('jwt', { session: false }), isAdmin, getTotalCustomers);
