@@ -13,7 +13,7 @@ const addToCart = async (req, res) => {
     }
 
     try {
-        // Get product and validate stock in one query
+        // Get product and validate stock
         const product = await Product.findOne({
             _id: productId,
             stock: { $gte: quantity }
@@ -26,9 +26,8 @@ const addToCart = async (req, res) => {
             });
         }
 
-        // Find or create cart with products population in one query
-        let cart = await Cart.findOne({ user: userId })
-            .populate('products.product', 'price');
+        // Find or create cart
+        let cart = await Cart.findOne({ user: userId }).populate('products.product', 'price');
 
         if (!cart) {
             cart = new Cart({
@@ -42,17 +41,11 @@ const addToCart = async (req, res) => {
         cart.products = Array.isArray(cart.products) ? cart.products : [];
 
         // Find existing product in cart
-        const existingProduct = cart.products.find(
-            (p) => {
-                if(p.product) {
-                    return p.product?._id.toString() === productId
-                } 
-            }
-        );
+        const existingProduct = cart.products.find((p) => p.product && p.product._id.toString() === productId);
 
         if (existingProduct) {
             const newQuantity = existingProduct.quantity + quantity;
-            
+
             // Validate combined quantity against stock
             if (product.stock < newQuantity) {
                 return res.status(400).json({
@@ -60,7 +53,7 @@ const addToCart = async (req, res) => {
                     message: 'No hay suficiente stock para la cantidad total'
                 });
             }
-            
+
             existingProduct.quantity = newQuantity;
         } else {
             cart.products.push({
@@ -69,24 +62,22 @@ const addToCart = async (req, res) => {
             });
         }
 
-        // Calculate total price efficiently using populated products
+        // Recalculate total price
         cart.totalPrice = cart.products.reduce((total, item) => {
-            const productPrice = item.product?.price || 0;
+            const productPrice = item.product?.price || product.price; // Use populated price or fetched product price
             return total + (productPrice * item.quantity);
         }, 0);
 
-        // Save cart and return updated version
+        // Save cart
         await cart.save();
 
         // Populate cart products before sending response
-        const populatedCart = await Cart.findById(cart._id)
-            .populate('products.product');
+        const populatedCart = await Cart.findById(cart._id).populate('products.product');
 
         return res.status(200).json({
             success: true,
             cart: populatedCart
         });
-
     } catch (error) {
         console.error('Error en addToCart:', error);
         return res.status(500).json({
