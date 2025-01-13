@@ -17,6 +17,8 @@ import reSend from '../controllers/users/reSendEmail.js';
 import createAdmin from '../controllers/users/createAdmin.js';
 import updateUser from '../controllers/users/updateUser.js';
 import adminConvert from '../controllers/users/adminConvert.js';
+import createCustomer from '../controllers/users/createCustomer.js';
+
 import { deleteUser, deleteUsers } from '../controllers/users/deleteUsers.js';
 import getMyData from '../controllers/users/getMyData.js';
 import { getOneUser, getUsers, getTotalCustomers, getCustomer } from '../controllers/users/getUsers.js';
@@ -48,7 +50,7 @@ router.get('/get-one-user', passport.authenticate('jwt', { session: false }), is
 router.get('/:id', passport.authenticate('jwt', { session: false }), isAdmin, getCustomer);
 router.post('/save_push_token', passport.authenticate('jwt', { session: false }), savePushToken);
 // Admin Management Routes
-router.put('/create-admin/:id', passport.authenticate('jwt', { session: false }), isAdmin, createAdmin);
+router.post('/create-customer', passport.authenticate('jwt', { session: false }), isAdmin, accountExistsSignUp, validator(userSignUp), createCustomer);
 router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, adminConvert);
 
 // User Deletion Routes
