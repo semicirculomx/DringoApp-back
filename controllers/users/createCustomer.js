@@ -1,4 +1,5 @@
 import User from '../../models/User.js'
+import bcryptjs from 'bcryptjs';
 
 let createCustomer = async (req, res, next) => {
     console.log(req.body)
