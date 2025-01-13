@@ -50,7 +50,7 @@ router.get('/get-one-user', passport.authenticate('jwt', { session: false }), is
 router.get('/:id', passport.authenticate('jwt', { session: false }), isAdmin, getCustomer);
 router.post('/save_push_token', passport.authenticate('jwt', { session: false }), savePushToken);
 // Admin Management Routes
-router.post('/create-customer', passport.authenticate('jwt', { session: false }), isAdmin, accountExistsSignUp, validator(userSignUp), createCustomer);
+router.post('/create-customer', passport.authenticate('jwt', { session: false }), isAdmin, accountExistsSignUp, createCustomer);
 router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, adminConvert);
 
 // User Deletion Routes
