@@ -42,9 +42,9 @@ const updateOrder = async (req, res) => {
             const statusMessages = {
                 "pendiente": 'Tu pedido está pendiente.',
                 "en preparación": 'Estamos procesando tu pedido.',
-                "en camino": 'Tu pedido ha sido enviado.',
-                "cancelado": 'Tu pedido ha sido entregado.',
-                "entregado": 'Tu pedido ha sido cancelado.',
+                "en camino": 'Tu pedido está en camino.',
+                "cancelado": 'Tu pedido ha sido cancelado.',
+                "entregado": 'Tu pedido ha sido entregado.',
             };
 
             const notificationBody = statusMessages[status] || 'El estado de tu pedido ha cambiado.';
