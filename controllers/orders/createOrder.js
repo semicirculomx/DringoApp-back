@@ -97,13 +97,22 @@ const createOrder = async (req, res) => {
 
         // Send push notification to the user
         const user = await User.findById(userId);
-        if (user && user.pushToken) {
+        if (user) {
+            await sendEmail({
+                to: 'dringo.pedidos@gmail.com',
+                subject: 'Tienes un nuevo pedido, por favo, revisa tu dashboard de ventas',
+                template: `Revisa tu dashboard aqui: https://dashboard.dringo.com.mx/dashboard/orders`
+            });
+
+            if(user.pushToken) {
             await sendPushNotification(
                 user.pushToken,
                 '¡Orden confirmada!',
                 `Tu orden con un total de $${totalPrice.toFixed(2)} ha sido confirmada y está en proceso.`,
                 { orderId: newOrder._id }
             );
+        }
+
         }
 
         return res.status(201).json({ success: true, order: newOrder });
