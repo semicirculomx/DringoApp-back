@@ -69,7 +69,7 @@ const createOrder = async (req, res) => {
             }
 
             if (updatedProduct.stock < 0) {
-                throw new Error(`Stock insuficiente para el producto: ${product.name}`);
+                throw new Error(`Stock insuficiente para el producto: ${product.name}, elimina del carrito el producto`);
             }
 
             updatedProducts.push({ productId: product.product, quantity: product.quantity });
