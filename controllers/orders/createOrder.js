@@ -100,7 +100,7 @@ const createOrder = async (req, res) => {
         if (user) {
             await sendEmail({
                 to: 'dringo.pedidos@gmail.com',
-                subject: 'Tienes un nuevo pedido, por favo, revisa tu dashboard de ventas',
+                subject: 'Tienes un nuevo pedido, por favor, revisa tu dashboard de ventas',
                 template: `Revisa tu dashboard aqui: https://dashboard.dringo.com.mx/dashboard/orders`
             });
 

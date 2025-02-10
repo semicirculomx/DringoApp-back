@@ -16,15 +16,15 @@ import { editProductSchema } from '../schemas/editProduct.js';
 const router = express.Router();
 
 // Ruta para obtener todos los productos
-router.get('/', passport.authenticate('jwt', { session: false }), getAllProducts);
+router.get('/', getAllProducts);
 // Ruta para traer los productos mas pedidos de la sección "lo mas pedido"
-router.get('/top-ordered-products', passport.authenticate('jwt', { session: false }), getTopOrderedProducts);
+router.get('/top-ordered-products', getTopOrderedProducts);
 
 // Ruta para crear un nuevo producto
 router.post('/create', passport.authenticate('jwt', { session: false }), isAdmin, validator(productSchema), createProduct);
 
 // Ruta para obtener un producto específico por ID
-router.get('/:id', passport.authenticate('jwt', { session: false }), readOne);
+router.get('/:id', readOne);
 
 // Ruta para actualizar un producto existente por ID
 router.put('/:id', passport.authenticate('jwt', { session: false }), isAdmin, validator(editProductSchema), updateProduct);

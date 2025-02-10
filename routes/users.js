@@ -5,7 +5,7 @@ import accountExistsSignUp from '../middlewares/accountSignUp.js';
 import accountExistsSignIn from '../middlewares/accountSignIn.js';
 import verifyCurrentPassword from '../middlewares/verifyCurrentPassword.js';
 import passwordIsOk from '../middlewares/passwordIsOk.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import {isAdmin, isOwnerOrAdmin} from '../middlewares/isAdmin.js';
 import accountHasBeenVerified from '../middlewares/isVerified.js'
 import signUp from '../controllers/users/signUp.js';
 import signIn from '../controllers/users/signIn.js';
@@ -55,6 +55,7 @@ router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, a
 
 // User Deletion Routes
 router.delete('/:id', passport.authenticate('jwt', { session: false }), isAdmin, deleteUser);
+router.delete('/delete-account/:id', passport.authenticate('jwt', { session: false }), isOwnerOrAdmin, deleteUser);
 router.delete('/', passport.authenticate('jwt', { session: false }), isAdmin, deleteUsers);
 
 export default router;
