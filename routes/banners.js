@@ -1,6 +1,6 @@
 // routes/banners.js
 import express from 'express';
-import isAdmin from '../middlewares/isAdmin.js'; // Asegúrate de importar correctamente el middleware
+import { isAdmin } from '../middlewares/isAdmin.js'; // Asegúrate de importar correctamente el middleware
 import create from '../controllers/banners/create.js';
 import read_all from '../controllers/banners/read.js';
 import update from '../controllers/banners/update.js';

@@ -1,10 +1,10 @@
 // routes/categories.js
 import express from 'express';
-import {isAdmin} from '../middlewares/isAdmin.js'; // Asegúrate de importar correctamente el middleware
-import create from '../controllers/categories/create.js';
-import read_all from '../controllers/categories/read.js';
-import update from '../controllers/categories/update.js';
-import deleteCategory from '../controllers/categories/delete.js';
+import { isAdmin } from '../middlewares/isAdmin.js'; // Asegúrate de importar correctamente el middleware
+import create from '../controllers/subcategories/create.js';
+import read_all from '../controllers/subcategories/read.js';
+import update from '../controllers/subcategories/update.js';
+import deleteCategory from '../controllers/subcategories/delete.js';
 import passport from '../middlewares/passport.js';
 
 let router = express.Router();

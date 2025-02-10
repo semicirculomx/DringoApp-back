@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from '../middlewares/passport.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
 import validator from '../middlewares/validator.js';
 import createCoupon from '../controllers/coupons/createCoupon.js';
 import getCoupons from '../controllers/coupons/getCoupons.js';

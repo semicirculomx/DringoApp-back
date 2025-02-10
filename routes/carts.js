@@ -5,7 +5,7 @@ import removeFromCart from '../controllers/carts/removeFromCart.js';
 import read from '../controllers/carts/read.js';
 import clearCart from '../controllers/carts/clearCart.js';
 import updateStock from '../controllers/carts/updateCart.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
 import readAll from '../controllers/carts/readAll.js';
 import repeatOrder from '../controllers/carts/repeatOrder.js'; 
 const router = express.Router();

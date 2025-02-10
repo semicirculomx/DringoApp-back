@@ -6,8 +6,9 @@ const productSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+  subcategory: { type: Schema.Types.ObjectId, ref: 'Subcategory' }, // Nueva relación con subcategoría
   stock: { type: Number, required: true },
-  images: [{ type: String }]
+  images: [{ type: String }],
 }, { timestamps: true });
 
 const Product = model('Product', productSchema);

@@ -8,7 +8,7 @@ import getTopOrderedProducts from '../controllers/products/getTopOrderedProducts
 import readOne from '../controllers/products/readOne.js';
 import validator from '../middlewares/validator.js';
 import { productSchema } from '../schemas/product.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
 import { editProductSchema } from '../schemas/editProduct.js';
 
 

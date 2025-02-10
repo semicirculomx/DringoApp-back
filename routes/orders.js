@@ -12,7 +12,7 @@ import readOrder from '../controllers/orders/readOrder.js';
 import deleteOrder from '../controllers/orders/deleteOrder.js';
 import deleteOrders from '../controllers/orders/deleteOrders.js';
 import { myOrders } from '../controllers/orders/myOrders.js';
-import isAdmin from '../middlewares/isAdmin.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
 
 const router = express.Router();
 
