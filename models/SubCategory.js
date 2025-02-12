@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const subcategorySchema = new Schema({
-  name: { type: String, required: true },
-  description: { type: String },
-  category: { type: Schema.Types.ObjectId, ref: 'Category', required: true }, // Relacionado con la categoría principal
+    name: { type: String, required: true },
+  image: { type: String, required: true },
+  description:{type:String, required: true},
 }, { timestamps: true });
 
 const Subcategory = model('Subcategory', subcategorySchema);

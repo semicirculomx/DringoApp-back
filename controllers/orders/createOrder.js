@@ -6,6 +6,7 @@ import User from '../../models/User.js';
 import { handleCouponUsage } from '../../utils/couponUtils.js';
 import { validateCartProducts } from '../../utils/productUtils.js';
 import { clearCart } from '../../utils/clearCart.util.js';
+import sendEmail from '../../utils/mailing.util.js';
 
 const sendPushNotification = async (expoPushToken, title, body, data) => {
     const message = {
