@@ -99,11 +99,11 @@ const createOrder = async (req, res) => {
         // Send push notification to the user
         const user = await User.findById(userId);
         if (user) {
-            // await sendEmail({
-            //     to: 'dringo.pedidos@gmail.com',
-            //     subject: 'Tienes un nuevo pedido, por favor, revisa tu dashboard de ventas',
-            //     template: `Revisa tu dashboard aqui: https://dashboard.dringo.com.mx/dashboard/orders`
-            // });
+            await sendEmail({
+                to: 'dringo.pedidos@gmail.com',
+                subject: 'Tienes un nuevo pedido, por favor, revisa tu dashboard de ventas',
+                template: `Revisa tu dashboard aqui: https://dashboard.dringo.com.mx/dashboard/orders`
+            });
 
             if(user.pushToken) {
             await sendPushNotification(
