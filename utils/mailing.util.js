@@ -5,16 +5,6 @@ const mailerSend = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY,
 });
 
-const emailParams = new EmailParams()
-    .setFrom("pedidos@dringo.com.mx")
-    .setFromName("Dringo Night Delivery")
-    .setRecipients(recipients)
-    .setSubject("Subject")
-    .setHtml("Greetings from the team, you got this message through MailerSend.")
-    .setText("Greetings from the team, you got this message through MailerSend.");
-
-mailersend.send(emailParams);
-
 // Función para enviar correo electrónico
 async function sendEmail(data) {
   const sentFrom = new Sender('pedidos@dringo.com.mx', 'Dringo Night Delivery');
