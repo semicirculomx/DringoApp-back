@@ -9,6 +9,7 @@ import favoritesRouter from './favorites.js'
 import paymentsRouter from './payments.js'
 import ordersRoutes from './orders.js'
 import bannersRoutes from './banners.js'
+import utilsRoutes from './utils.js'
 // Creamos un nuevo objeto router
 const router = express.Router();
 
@@ -22,6 +23,6 @@ router.use('/coupons', couponsRouter)
 router.use('/payments', paymentsRouter)
 router.use('/orders', ordersRoutes)
 router.use('/banners', bannersRoutes)
-
+router.use('/utils', utilsRoutes)
 // Exportamos el objeto router
 export default router;
