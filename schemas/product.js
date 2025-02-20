@@ -45,6 +45,13 @@ export const productSchema = Joi.object({
       'any.required': 'La categoría es obligatoria.',
       'string.empty': 'La categoría no puede estar vacía.',
     }),
+    subcategory: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .messages({
+      'string.pattern.base': 'Debe seleccionar una categoría válida.',
+      'any.required': 'La subcategoría es obligatoria.',
+      'string.empty': 'La subcategoría no puede estar vacía.',
+    }),
   stock: Joi.number()
     .integer()
     .min(0)
