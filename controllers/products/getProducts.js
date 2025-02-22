@@ -26,6 +26,7 @@ const read = async (req, res) => {
         // Obtener productos con paginación, filtro y ordenación
         const products = await Product.find(queries)
             .sort(sortOptions)
+            .populate("subcategory"); // Ensure this matches the field in your Product model
             // .skip(skip)
             // .limit(paginationLimit);
 
