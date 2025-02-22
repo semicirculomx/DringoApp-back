@@ -22,6 +22,8 @@ const read = async (req, res) => {
         const products = await Product.find(queries)
             .sort(sortOptions)
             .limit(pagination.limit)
+            .populate("subcategory"); // Ensure this matches the field in your Product model
+
 
         // Total count of products matching the query (optional)
         const totalProducts = await Product.countDocuments(queries);
