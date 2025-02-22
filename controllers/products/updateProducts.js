@@ -2,12 +2,12 @@ import Product from '../../models/Product.js';
 
 const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, description, price, category, stock, images } = req.body;
+    const { name, description, price, subcategory, category, stock, images } = req.body;
 
     try {
         const product = await Product.findByIdAndUpdate(
             id,
-            { name, description, price, category, stock, images },
+            { name, description, price, category, subcategory, stock, images },
             { new: true }  // Esto devuelve el documento actualizado
         );
 
