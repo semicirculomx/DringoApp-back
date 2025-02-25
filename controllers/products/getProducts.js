@@ -15,9 +15,14 @@ const read = async (req, res) => {
 
         if (sort) sortOptions[sort] = 1; // Ordenar por el campo especificado en orden ascendente
         if (name) {
-            const regex = new RegExp(name, 'i'); // Expresión regular para búsqueda case-insensitive
-            queries.$or = [{ name: regex }, { subcategory: regex }];
-        }        if (priceOrder) sortOptions.price = priceOrder === 'asc' ? 1 : -1; // Ordenar por precio ascendente o descendente
+            const regex = new RegExp(name, 'i'); // Case-insensitive regex for partial matches
+        
+            queries.$or = [
+                { name: regex }, // Search by product name
+                { description: regex }, // Search by product description
+            ];
+        }
+        if (priceOrder) sortOptions.price = priceOrder === 'asc' ? 1 : -1; // Ordenar por precio ascendente o descendente
         if (category) queries.category = { $in: category.split(',') }; // Filtrar por categorías
 
         // Calcular el número de documentos a omitir para la paginación

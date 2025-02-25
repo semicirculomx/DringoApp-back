@@ -22,7 +22,7 @@ async function fetchLatestVersion() {
     console.error("Error fetching App Store version:", error);
   }
 
-  return cachedVersion;
+  return '1.0.12';
 }
 
 
