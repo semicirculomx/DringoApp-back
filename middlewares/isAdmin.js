@@ -34,11 +34,13 @@ const isAdminOrDelivery = async (req, res, next) => {
                 message: "Usuario no encontrado"
             });
         }
-        if (userAdmin.role !== 1 || userAdmin.role !== 2) {
+        if (userAdmin.role !== 1) {
+            if (userAdmin.role !== 2) {
             return res.status(403).json({
                 success: false,
                 message: "Error al verificar: No tienes acceso para ingresar"
             });
+            }
         }
         next();
     } catch (error) {
