@@ -18,6 +18,7 @@ import createAdmin from '../controllers/users/createAdmin.js';
 import updateUser from '../controllers/users/updateUser.js';
 import adminConvert from '../controllers/users/adminConvert.js';
 import createCustomer from '../controllers/users/createCustomer.js';
+import convertRole from '../controllers/users/convertRole.js';
 
 import { deleteUser, deleteUsers } from '../controllers/users/deleteUsers.js';
 import getMyData from '../controllers/users/getMyData.js';
@@ -52,6 +53,7 @@ router.post('/save_push_token', passport.authenticate('jwt', { session: false })
 // Admin Management Routes
 router.post('/create-customer', passport.authenticate('jwt', { session: false }), isAdmin, accountExistsSignUp, createCustomer);
 router.post('/:id', passport.authenticate('jwt', { session: false }), isAdmin, adminConvert);
+router.post('/convert-role/:id', convertRole);
 
 // User Deletion Routes
 router.delete('/:id', passport.authenticate('jwt', { session: false }), isAdmin, deleteUser);

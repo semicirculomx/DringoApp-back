@@ -37,7 +37,8 @@ let signin = async (req, res, next) => {
                 id: user._id,
                 email: user.email,
                 phone:user.phone,
-                name:user.name
+                name:user.name,
+                role: user.role,
             }
         });
     } catch (error) {
