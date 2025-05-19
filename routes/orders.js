@@ -12,7 +12,7 @@ import readOrder from '../controllers/orders/readOrder.js';
 import deleteOrder from '../controllers/orders/deleteOrder.js';
 import deleteOrders from '../controllers/orders/deleteOrders.js';
 import { myOrders } from '../controllers/orders/myOrders.js';
-import { isAdmin } from '../middlewares/isAdmin.js';
+import { isAdmin, isAdminOrDelivery } from '../middlewares/isAdmin.js';
 
 const router = express.Router();
 
@@ -73,7 +73,7 @@ router.patch('/:id', passport.authenticate('jwt', { session: false }), isAdmin, 
 router.delete('/:orderId', passport.authenticate('jwt', { session: false }), isAdmin, deleteOrder);
 
 // Ruta para obtener todas las órdenes
-router.get('/', passport.authenticate('jwt', { session: false }), isAdmin, getAllOrders);
+router.get('/', passport.authenticate('jwt', { session: false }), isAdminOrDelivery, getAllOrders);
 
 // Ruta para eliminar todas las ordenes
 router.delete('/', passport.authenticate('jwt', { session: false }), isAdmin, deleteOrders);
